@@ -6,8 +6,8 @@ Run "Slurm" jobs on k8s
 
 ## Prerequisites
 
-- kind (kubernetes in docker)
-- kubectl (to manage kind)
+- `kind` (kubernetes in docker)
+- `kubectl` (to manage kind)
 
 ## Setup
 
