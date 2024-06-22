@@ -449,7 +449,7 @@ def main(node_names=None, scheduler_type="standard", strictorder=True):
 
     threading.Thread(target=scheduler).start()
 
-    waitress.serve(app, listen="127.0.0.1:6000")
+    waitress.serve(app, listen="0.0.0.0:6000")
 
 
 if __name__ == "__main__":

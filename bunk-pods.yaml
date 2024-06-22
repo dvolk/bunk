@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bunk-scaler
+spec:
+  containers:
+  - name: ubuntu
+    image: bunk:v9
+    command: ["/root/env/bin/python", "main.py", "--profile", "kind"]
+    workingDir: "/root/bunk/scaler"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bunk-scheduler
+  labels:
+    app: bunk-scheduler
+spec:
+  containers:
+  - name: ubuntu
+    image: bunk:v9
+    command: ["/root/env/bin/python", "hypergrid.py"]
+    workingDir: "/root/bunk/scheduler"
+    ports:
+      - containerPort: 6000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bunk-scheduler
+spec:
+  selector:
+    app: bunk-scheduler
+  ports:
+    - protocol: TCP
+      port: 6000
+      targetPort: 6000
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bunk-login
+spec:
+  containers:
+  - name: ubuntu
+    image: bunk:v9
+    ports:
+    - containerPort: 22
+      name: ssh
+    securityContext:
+      capabilities:
+        add:
+        - SYS_ADMIN
+

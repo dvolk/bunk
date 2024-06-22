@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 
 import uuid
 import logging
@@ -49,7 +49,7 @@ def main():
 
     # print(data)
 
-    cg_uuid = requests.post('http://127.0.0.1:6000/submit', json=data).text
+    cg_uuid = requests.post('http://bunk-scheduler:6000/submit', json=data).text
 
     print(cg_uuid)
 

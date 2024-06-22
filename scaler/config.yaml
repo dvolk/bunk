@@ -9,7 +9,7 @@ profiles:
       min_nodes: 0
       max_nodes: 3
     node_controller_params:
-      image_name: "ubu-ssh:v3"
+      image_name: "bunk:v7"
 
   - name: test
     node_controller: node_controllers.test.TestNodeController

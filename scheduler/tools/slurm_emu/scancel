@@ -4,4 +4,4 @@ import sys
 import requests
 
 for job_id in sys.argv[1:]:
-    r = requests.get(f'http://localhost:6000/terminate/{job_id}')
+    r = requests.get(f'http://bunk-scheduler:6000/terminate/{job_id}')
