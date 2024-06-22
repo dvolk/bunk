@@ -1,8 +1,8 @@
 # BUNK
 
-![BUNK title image with cute BUNK sloth hanging on a ship's wheel](bunk-title.png)
+Run "Slurm" jobs on k8s
 
-Run "slurm" jobs on k8s
+![BUNK title image with cute BUNK sloth hanging on a ship's wheel](bunk-title.png)
 
 ## Prerequisites
 
