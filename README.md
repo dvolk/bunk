@@ -12,14 +12,27 @@ Run "Slurm" jobs on k8s
 ## Setup
 
 ```
-docker build -t bunk-login:v1 .
+docker build -t bunk .
 kind create cluster --config kind.conf
-kind load docker-image bunk-login:v1
-kubectl apply -f bunk-login-pod.yaml
+kind load docker-image bunk
+kubectl apply -f bunk-pods.yaml
 ```
 
-## Login node setup
+## Scaler setup
+
+- copy `~/.kube/config` to the `bunk-scaler` pod in `/root/.kube/config`
+
+## Demo
+
+Enter the bunk-login pod:
 
 ```
-...
+kubectl exec -it bunk-login /bin/bash
+```
+
+Run the example sbatch job:
+
+```
+cd /root/bunk
+sbatch example.sbatch
 ```
