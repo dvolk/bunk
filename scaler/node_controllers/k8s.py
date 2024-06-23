@@ -28,6 +28,13 @@ def k8s_create_node(image_name):
                     ports=[client.V1ContainerPort(container_port=22, name="ssh")],
                     security_context=client.V1SecurityContext(
                         capabilities=client.V1Capabilities(add=["SYS_ADMIN"])
+                    ),
+                    lifecycle=client.V1Lifecycle(
+                        post_start=client.V1LifecycleHandler(
+                            _exec=client.V1ExecAction(
+                                command=["mount", "-t", "nfs", "-o", "vers=4", "bunk-nfs.default.svc.cluster.local:/", "/work"]
+                            )
+                        )
                     )
                 )
             ]
