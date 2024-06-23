@@ -1,6 +1,6 @@
 # BUNK
 
-Run "Slurm" jobs on k8s
+Run "Slurm" jobs on kubernetes
 
 ![BUNK title image with cute BUNK sloth hanging on a ship's wheel](bunk-title.png)
 
@@ -8,6 +8,12 @@ Run "Slurm" jobs on k8s
 
 - `kind` (kubernetes in docker)
 - `kubectl` (to manage kind)
+
+## Description
+
+BUNK deploys a custom scaler and scheduler as kubernetes pods. The scaler monitors the scheduler and creates/deletes worker pods.
+
+For users familiar with Slurm, BUNK includes Slurm-like binaries sbatch/squeue/scancel to control BUNK jobs.
 
 ## Setup
 
