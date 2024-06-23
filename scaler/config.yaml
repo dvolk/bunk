@@ -6,10 +6,10 @@ profiles:
     scheduler_params:
       node_timeout: 30
     scaler_params:
-      min_nodes: 0
+      min_nodes: 1
       max_nodes: 3
     node_controller_params:
-      image_name: "bunk:v7"
+      image_name: "bunk:test"
 
   - name: test
     node_controller: node_controllers.test.TestNodeController

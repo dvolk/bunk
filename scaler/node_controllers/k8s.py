@@ -7,7 +7,11 @@ def generate_pod_name():
 
 def k8s_create_node(image_name):
     # Load the Kubernetes configuration
-    config.load_kube_config()
+    try:
+        # Load the in-cluster configuration
+        config.load_incluster_config()
+    except config.ConfigException:
+        config.load_kube_config()
 
     # Define the pod spec
     pod_name = generate_pod_name()
@@ -20,6 +24,7 @@ def k8s_create_node(image_name):
                 client.V1Container(
                     name="ubuntu",
                     image=image_name,
+                    image_pull_policy="IfNotPresent",
                     ports=[client.V1ContainerPort(container_port=22, name="ssh")],
                     security_context=client.V1SecurityContext(
                         capabilities=client.V1Capabilities(add=["SYS_ADMIN"])
@@ -41,8 +46,11 @@ def k8s_create_node(image_name):
             return pod_ip
 
 def k8s_destroy_node(server_ip):
-    # Load the Kubernetes configuration
-    config.load_kube_config()
+    try:
+        # Load the in-cluster configuration
+        config.load_incluster_config()
+    except config.ConfigException:
+        config.load_kube_config()
 
     # Get the list of pods
     v1 = client.CoreV1Api()

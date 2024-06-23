@@ -11,18 +11,16 @@ Run "Slurm" jobs on k8s
 
 ## Setup
 
+### Create image and cluster
+
 ```
-docker build -t bunk .
+docker build -t bunk:test .
 kind create cluster --config kind.conf
-kind load docker-image bunk
+kind load docker-image bunk:test
 kubectl apply -f bunk-pods.yaml
 ```
 
-## Scaler setup
-
-- copy `~/.kube/config` to the `bunk-scaler` pod in `/root/.kube/config`
-
-## Demo
+## Running a job
 
 Enter the bunk-login pod:
 
