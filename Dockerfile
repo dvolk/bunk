@@ -8,8 +8,12 @@ RUN apt-get update && \
     mv ./kubectl /usr/local/bin/kubectl
 
 # Install SSH server and other packages
-RUN apt-get update && apt-get install -y openssh-server git emacs-nox build-essential python3-venv python3-tabulate python3-requests && \
-    mkdir /var/run/sshd
+RUN apt-get update && apt-get install -y openssh-server git emacs-nox lsof build-essential python3-venv python3-tabulate python3-requests nfs-server && \
+    mkdir /var/run/sshd && \
+    mkdir /work
+
+# Configure nfs share
+RUN echo "/work *(rw,sync,fsid=0,no_subtree_check)" > /etc/exports
 
 COPY . /root/bunk
 

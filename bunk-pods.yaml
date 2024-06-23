@@ -9,6 +9,7 @@ spec:
     command: ["/root/env/bin/python", "main.py", "--profile", "kind"]
     workingDir: "/root/bunk/scaler"
     imagePullPolicy: IfNotPresent
+
 ---
 apiVersion: v1
 kind: Pod
@@ -25,6 +26,7 @@ spec:
     ports:
       - containerPort: 6000
     imagePullPolicy: IfNotPresent
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -38,6 +40,7 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
   apiGroup: rbac.authorization.k8s.io
+
 ---
 apiVersion: v1
 kind: Service
@@ -50,6 +53,7 @@ spec:
     - protocol: TCP
       port: 6000
       targetPort: 6000
+
 ---
 apiVersion: v1
 kind: Pod
@@ -68,3 +72,48 @@ spec:
         - SYS_ADMIN
     imagePullPolicy: IfNotPresent
 
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bunk-nfs
+  labels:
+    app: bunk-nfs
+spec:
+  volumes:
+  - name: work
+    hostPath:
+      path: /work
+  containers:
+  - name: ubuntu
+    image: bunk:test
+    volumeMounts:
+      - name: work
+        mountPath: /work
+    ports:
+    - containerPort: 2049
+      name: nfs
+    command: ["/bin/bash", "-c"]
+    args:
+      - |
+        service rpcbind start;
+        service nfs-kernel-server start;
+        tail -f /dev/null;
+    securityContext:
+      privileged: true
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bunk-nfs
+spec:
+  ports:
+  - name: nfs
+    port: 2049
+  - name: mountd
+    port: 20048
+  - name: rpcbind
+    port: 111
+  selector:
+    app: bunk-nfs
