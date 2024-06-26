@@ -15,6 +15,23 @@ BUNK deploys a custom scaler and scheduler as kubernetes pods. The scaler monito
 
 For users familiar with Slurm, BUNK includes Slurm-like binaries sbatch/squeue/scancel to control BUNK jobs.
 
+## Architecture
+
+```mermaid
+graph LR
+subgraph control plane
+scaler --> scheduler
+login[login pod] --> scheduler
+end
+user --> login
+scaler --> workerpods
+subgraph workerpods[worker pods]
+scheduler --> worker-xxxxxxxxxxxx
+scheduler --> worker-xxxxxxxxxxxy
+scheduler --> worker-xxxxxxxxxxxz
+end
+```
+
 ## Setup
 
 ### Create image and cluster
