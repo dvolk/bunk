@@ -8,7 +8,6 @@ spec:
     image: bunk:test
     command: ["/root/env/bin/python", "main.py", "--profile", "kind"]
     workingDir: "/root/bunk/scaler"
-    imagePullPolicy: IfNotPresent
 ---
 apiVersion: v1
 kind: Pod
@@ -24,7 +23,6 @@ spec:
     workingDir: "/root/bunk/scheduler"
     ports:
       - containerPort: 6000
-    imagePullPolicy: IfNotPresent
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -59,6 +57,7 @@ spec:
   containers:
   - name: ubuntu
     image: bunk:test
+    workingDir: "/root/bunk"
     ports:
     - containerPort: 22
       name: ssh
@@ -66,5 +65,4 @@ spec:
       capabilities:
         add:
         - SYS_ADMIN
-    imagePullPolicy: IfNotPresent
 
