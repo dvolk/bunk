@@ -38,7 +38,7 @@ end
 
 ```
 docker build -t bunk:test .
-kind create cluster --config kind.conf
+kind create cluster --config kind-cluster.conf
 kind load docker-image bunk:test
 kubectl apply -f bunk-pods.yaml
 ```
